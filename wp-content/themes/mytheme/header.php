@@ -9,3 +9,9 @@
 </head>
 
 <body <?php body_class(); ?>>
+<a href="<?php echo home_url() ?>">
+    <h1><?php bloginfo(‘title’); ?></h1>
+</a>
+<p>
+    <?php bloginfo(‘description’); ?>
+</p>
