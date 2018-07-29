@@ -1,0 +1,34 @@
+version: "3.6"
+services:
+  wordpress:
+    image: wordpress:4.9.7-php7.1
+    ports:
+    - "9000:80"
+    depends_on:
+    - mysql
+    environment:
+      - WORDPRESS_DB_HOST=mysql:3306
+      - WORDPRESS_DB_NAME=wordpress
+      - WORDPRESS_DB_USER=wp_user
+      - WORDPRESS_DB_PASSWORD=wordpress
+    volumes:
+    - .:/var/www/html
+  node:
+    image: node:10.7.0
+    working_dir: /mytheme
+    volumes:
+    - ./wp-content/themes/mytheme:/mytheme
+    command: yarn watch
+  mysql:
+    image: mysql:5.7
+    environment:
+      - MYSQL_RANDOM_ROOT_PASSWORD=yes
+      - MYSQL_DATABASE=wordpress
+      - MYSQL_USER=wp_user
+      - MYSQL_PASSWORD=wordpress
+    volumes:
+    - mysql-data:/var/lib/mysql
+
+volumes:
+  mysql-data:
+    driver: local
